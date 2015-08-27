@@ -1,0 +1,32 @@
+/* CSS declarations go here */
+body {
+  padding: 0;
+  margin-left: 10%;
+  margin-right: 10%;
+  background-color: #fff;
+}
+
+li {
+  list-style: none;
+}
+
+h1, ul, li {
+  text-align: center;
+}
+
+ul {
+  padding: 0;
+}
+
+.selected {
+  background-color: yellow;
+}
+
+.notice {
+  background-color: rgba(255,150,0, 0.4);
+  color: white;
+}
+
+li .add-points {
+  float: right;
+}
