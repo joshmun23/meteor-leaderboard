@@ -1,4 +1,6 @@
 User = new Mongo.Collection('users');
+const i = 0;
+
 if (Meteor.isClient) {
   Template.leaderboard.helpers({
     msg: function() {
@@ -11,10 +13,6 @@ if (Meteor.isClient) {
     },
     count: function() {
       return User.find().count()
-    },
-    sessionData: function() {
-      var selectedUser = Session.get('selectedUser');
-      return selectedUser
     },
     selectedClass: function() {
       var userID = this._id,
@@ -29,6 +27,15 @@ if (Meteor.isClient) {
       var user = User.findOne(userID);
 
       return user
+    },
+    hide: function() {
+      var userID = Session.get('selectedUser');
+
+      if(userID) {
+        return ''
+      } else {
+        return 'hide'
+      }
     }
   });
 
@@ -60,10 +67,16 @@ if (Meteor.isClient) {
         name: name, score: 0
       })
     },
-    'click .remove-user': function() {
+    'click .remove-user': function(event) {
+      event.preventDefault();
       var userID = Session.get('selectedUser');
+      i++;
+      console.log(i);
+      removeUser = confirm('Are you sure if you want to remove this user?');
 
-      User.remove(userID);
+      if(removeUser) {
+        User.remove(userID);
+      }
     }
   });
 }

@@ -23,10 +23,33 @@ ul {
 }
 
 .notice {
-  background-color: rgba(255,150,0, 0.4);
+  background-color: rgba(46, 204, 113,0.6);
   color: white;
+  font-weight: bold;
+  text-align: center;
 }
 
 li .add-points {
   float: right;
+}
+
+.hide {
+  display: none;
+}
+
+.add-user input, .remove-user input {
+  width: 40%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  padding: 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.add-user input {
+  text-align: center;
 }
