@@ -6,6 +6,7 @@
   <h1>Leaderboard</h1>
 
   {{> leaderboard }}
+
 </body>
 
 <template name="leaderboard">
@@ -29,11 +30,16 @@
     {{ /each }}
   </ul>
 
+  {{> addUserForm }}
+</template>
+
+<template name="addUserForm">
   <form class="add-user">
-    <input type="text" name="name" placeholder="Add User">
+    <input type="text" name="userName" placeholder="Add User">
+    <input type="score" name="userScore" placeholder="Add Score (Optional)">
+    <input type="submit" value="Add User">
   </form>
 
-  <form class="remove-user">
-    <input type="button" class="remove-user" value="Remove User">
-  </form>
+
+  <input type="button" class="remove-user" value="Remove User">
 </template>
