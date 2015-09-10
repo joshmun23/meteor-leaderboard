@@ -3,6 +3,8 @@
 </head>
 
 <body>
+  {{> loginButtons }}
+
   <h1>Leaderboard</h1>
 
   {{> leaderboard }}
@@ -34,6 +36,7 @@
 </template>
 
 <template name="addPlayerForm">
+  {{ #if currentUser }}
   <form class="add-player">
     <input type="text" name="playerName" placeholder="Add Player">
     <input type="score" name="playerScore" placeholder="Add Score (Optional)">
@@ -42,4 +45,5 @@
 
 
   <input type="button" class="remove-player" value="Remove Player">
+  {{ /if }}
 </template>
