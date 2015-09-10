@@ -1,36 +1,36 @@
-User = new Mongo.Collection('users');
+Players = new Mongo.Collection('players');
 
 if (Meteor.isClient) {
   Template.leaderboard.helpers({
     msg: function() {
       return 'active players.'
     },
-    user: function() {
-      return User.find({}, {
+    player: function() {
+      return Players.find({}, {
         sort: {score: -1, name: 1}
       });
     },
     count: function() {
-      return User.find().count()
+      return Players.find().count()
     },
     selectedClass: function() {
-      var userID = this._id,
-          selectedUser = Session.get('selectedUser');
+      var PlayerID = this._id,
+          selectedPlayer = Session.get('selectedPlayer');
 
-      if(selectedUser == this._id) {
+      if(selectedPlayer == this._id) {
         return 'selected'
       }
     },
-    showSelectedUser: function() {
-      var userID = Session.get('selectedUser');
-      var user = User.findOne(userID);
+    showSelectedPlayer: function() {
+      var PlayerID = Session.get('selectedPlayer');
+      var player = Players.findOne(PlayerID);
 
-      return user
+      return player
     },
     hide: function() {
-      var userID = Session.get('selectedUser');
+      var PlayerID = Session.get('selectedPlayer');
 
-      if(userID) {
+      if(PlayerID) {
         return ''
       } else {
         return 'hide'
@@ -40,45 +40,45 @@ if (Meteor.isClient) {
 
   Template.leaderboard.events({
     'click .player': function() {
-      var userID = this._id;
-      Session.set('selectedUser', userID);
+      var PlayerID = this._id;
+      Session.set('selectedPlayer', PlayerID);
     },
     'click .add-points': function() {
-      var userID = Session.get('selectedUser');
+      var PlayerID = Session.get('selectedPlayer');
 
-      User.update(userID, {
+      Players.update(PlayerID, {
         $inc: {score: 5}
       });
 
-      // user.update(score: user.score + 5);
+      // Players.update(score: player.score + 5);
     },
     'click .take-points': function() {
-      var userID = Session.get('selectedUser');
+      var PlayerID = Session.get('selectedPlayer');
 
-      User.update(userID, {
+      Players.update(PlayerID, {
         $inc: {score: -5}
       })
     }
   });
 
-  Template.addUserForm.events ({
+  Template.addPlayerForm.events ({
     'submit form': function(e) {
       e.preventDefault();
-      var userName = e.target.userName.value;
-      var userScore = e.target.userScore.value || 0;
+      var playerName = e.target.playerName.value;
+      var playerScore = e.target.playerScore.value || 0;
 
-      User.insert({
-        name: userName,
-        score: userScore
+      Players.insert({
+        name: playerName,
+        score: parseInt(playerScore) //need to convert into numeric values
       });
-      e.target.userName.value = '';
-      e.target.userScore.value = '';
+      e.target.playerName.value = '';
+      e.target.playerScore.value = '';
     },
-    'click .remove-user': function() {
-      var selectedUser = Session.get('selectedUser');
-      var removeUser = confirm('Are you sure you want to delete this user?');
-      if (removeUser) {
-        User.remove(selectedUser);
+    'click .remove-player': function() {
+      var selectedPlayer = Session.get('selectedPlayer');
+      var removePlayer = confirm('Are you sure you want to delete this player?');
+      if (removePlayer) {
+        Players.remove(selectedPlayer);
       };
     }
   });
@@ -86,6 +86,12 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
-    // code to run on server at startup
+    return Meteor.methods({
+      removeAllPlayers: function(){
+        // this function allows us to use Meteor.call('removeAllPlayers')
+        // client side (Trusted Code is Server Side)
+        return Players.remove({})
+      }
+    });
   });
 }

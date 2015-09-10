@@ -15,31 +15,31 @@
   </h4>
 
   <h5 class="notice">
-    {{ #if showSelectedUser }}
-      Selected User: {{ showSelectedUser.name }}
+    {{ #if showSelectedPlayer }}
+      Selected Player: {{ showSelectedPlayer.name }}
     {{ /if}}
   </h5>
 
   <ul>
     <input type="button" class="add-points {{hide}}" value="Give 5 Points">
     <input type="button" class="take-points {{hide}}" value="Take 5 Points">
-    {{ #each user }}
+    {{ #each player }}
       <li class="player {{selectedClass}}">
         {{name}}: {{score}}
       </li>
     {{ /each }}
   </ul>
 
-  {{> addUserForm }}
+  {{> addPlayerForm }}
 </template>
 
-<template name="addUserForm">
-  <form class="add-user">
-    <input type="text" name="userName" placeholder="Add User">
-    <input type="score" name="userScore" placeholder="Add Score (Optional)">
-    <input type="submit" value="Add User">
+<template name="addPlayerForm">
+  <form class="add-player">
+    <input type="text" name="playerName" placeholder="Add Player">
+    <input type="score" name="playerScore" placeholder="Add Score (Optional)">
+    <input type="submit" value="Add Player">
   </form>
 
 
-  <input type="button" class="remove-user" value="Remove User">
+  <input type="button" class="remove-player" value="Remove Player">
 </template>
