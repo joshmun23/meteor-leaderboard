@@ -114,9 +114,12 @@ if (Meteor.isServer) {
         Players.remove({_id: selectedPlayer, createdBy: currentUserId});
       },
       modifyPlayerScore: function(info) {
-        var score = info.isInc ? 5 : -5
+        var score = info.isInc ? 5 : -5,
+            currentUserId = Meteor.userId();
         console.log(info)
-        Players.update(info.playerId, {$inc: {
+        Players.update({_id:info.playerId,
+          createdBy: currentUserId
+        }, {$inc: {
           score: score
         }});
       }
